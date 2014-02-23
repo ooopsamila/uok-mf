@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding='utf-8'?>
+
+<jsp:root version="2.0" xmlns="http://www.w3c.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+          xmlns:c="http://java.sun.com/jstl/core_rt"
+          xmlns:form="http://www.springframework.org/tags/form" xmlns:pg="http://jsptags.com/tags/navigation/pager"
+          xsi:schemaLocation="http://www.w3c.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd">
+<jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
+            doctype-system="http://www.w3.org/TR/html4/loose.dtd"
+            doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+<jsp:directive.page contentType="text/html;charset=windows-1252"/>
+
+
+<div id="container" class="slider-wrap">
+
+<form:form id="manageStudentsForm" commandName="manageStudentsForm" modelAttribute="manageStudentsForm" method="post"
+           enctype="multipart/form-data">
+<div class="h1_colour-padded">
+    <fmt:message key="uok.mf.manage.student.title"/>
+</div>
+<div class="content">
+<div class="stripViewer">
+
+
+<div class="clearfix">
+    <div class="table-cell">
+        <label for="indexNumber"><fmt:message
+                key="uok.mf.manage.student.index.number"/>
+        </label>
+    </div>
+    <div class="table-cell">
+        <form:errors path="indexNumber" element="div" cssClass="error_message_above_field"/>
+        <form:input path="indexNumber" id="indexNumber" cssClass="text_box_medium" maxlength="45"/>
+    </div>
+</div>
+
+<div class="clearfix">
+    <div class="table-cell">
+        <label for="batch"><fmt:message
+                key="uok.mf.manage.student.batch"/>
+        </label>
+    </div>
+    <div class="table-cell">
+        <form:errors path="batch" element="div" cssClass="error_message_above_field"/>
+        <form:input path="batch" id="batch" cssClass="text_box_medium" maxlength="45"/>
+    </div>
+</div>
+
+<div class="clearfix">
+    <div class="buttonGroup">
+        <input type="button" class="button_left_most" value="Reset"
+               onclick="resetForm('manageStudentsForm')"/>
+        <input type="submit" class="button minor_margin_left" value="Submit"
+               onclick="submitForm('manageStudentsForm')"/>
+    </div>
+</div>
+
+<c:if test="${fn:length(ma.campaignRules) > 0}">
+<!--<fmt:message var="page" key="pm.programe.management.tile"/>-->
+<!--<fmt:message var="viewNormalSubPage" key="pm.programe.view.sub.tile"/>-->
+<!--<fmt:message var="viewBulkSubPage" key="pm.bulk.rewards.view.title"/>-->
+<!--<fmt:message var="viewInstantSubPage" key="instant.campaign.view.sub.tile"/>-->
+
+<div class="table-content" id="display_table">
+<c:url var="excelImg" value="/themes/${theme}/images/excel.jpg"/>
+<c:url var="downloadExcelUrl" value="/campaign/manageCampaign/downloadReport.html">
+    <c:param name="type" value="xls"/>
+</c:url>
+<a href="${downloadExcelUrl}"><img alt="" title="${exportExcel}" class="tool_icon"
+                                   src="${excelImg}"/> <![CDATA[&nbsp;]]></a>
+
+<table id="program_rule_list_table" cellspacing="0" cellpadding="0"
+       class="zebra-striped maintable4">
+
+<thead>
+<tr>
+    <th width="27%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.name"/><span class="sort_state"/>
+    </th>
+    <th width="16%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.start.date"/><span
+            class="sort_state"/>
+    </th>
+    <th width="16%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.end.date"/><span class="sort_state"/>
+    </th>
+    <th width="13%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.status"/><span class="sort_state"/>
+    </th>
+    <th width="10%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.campaign.type"/><span
+            class="sort_state"/>
+    </th>
+    <th width="14%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.created.by"/><span
+            class="sort_state"/>
+    </th>
+    <th width="15%" class="maintablehead4">
+        <fmt:message key="pm.programe.management.table.actions"/>
+    </th>
+
+</tr>
+</thead>
+<tbody>
+<c:forEach items="${programRuleForm.campaignRules}" begin="0" var="programRule"
+           varStatus="listIndex">
+<tr>
+<td class="table-td2">
+    <c:url var="viewUrl" value="/campaign/manageCampaign/viewCampaign.html">
+        <c:param name="campaignId" value="${programRule.id}"/>
+        <c:param name="campaignType" value="${programRule.campaignRuleType}"/>
+        <c:param name="offset" value="${pageMap.offset}"/>
+        <c:param name="page" value="${page}"/>
+        <c:choose>
+            <c:when test="${programRule.campaignRuleType =='NORMAL'}">
+                <c:param name="subPage" value="${viewNormalSubPage}"/>
+            </c:when>
+            <c:when test="${programRule.campaignRuleType =='BULK'}">
+                <c:param name="subPage" value="${viewBulkSubPage}"/>
+            </c:when>
+            <c:otherwise>
+                <c:param name="subPage" value="${viewInstantSubPage}"/>
+            </c:otherwise>
+        </c:choose>
+    </c:url>
+    <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_VIEW">
+        <a href="${viewUrl}"><c:out value="${programRule.name}"/></a>
+    </sec:authorize>
+    <sec:authorize ifNotGranted="ROLE_CAMPAIGN_VIEW">
+        <a href="#"><c:out value="${programRule.name}"/></a>
+    </sec:authorize>
+</td>
+<td class="table-td2">
+    <fmt:formatDate value="${programRule.startDate}" pattern="dd-MMM-yyyy HH:mm" var="stDate"/>
+    ${stDate}
+</td>
+<td class="table-td2">
+    <fmt:formatDate value="${programRule.endDate}" pattern="dd-MMM-yyyy HH:mm" var="endDate"/>
+    ${endDate}
+</td>
+<td class="table-td2">
+    ${programRule.campaignRuleState}
+</td>
+<td class="table-td2">
+    ${programRule.campaignRuleType}
+</td>
+<td class="table-td2">
+    ${programRule.author}
+</td>
+
+<c:url var="editImg" value="/themes/${theme}/images/edit.png"/>
+<c:url var="editDisableImg" value="/themes/${theme}/images/edit_dis.png"/>
+<c:url var="copyImg" value="/themes/${theme}/images/copy.png"/>
+<c:url var="copyDisabledImg" value="/themes/${theme}/images/copy_d.png"/>
+<c:url var="deleteImg" value="/themes/${theme}/images/close.png"/>
+<c:url var="deleteDisableImg" value="/themes/${theme}/images/close_dis.png"/>
+<c:url var="stopImg" value="/themes/${theme}/images/stop.png"/>
+<c:url var="stopDisableImg" value="/themes/${theme}/images/stop-disabled.png"/>
+<c:url var="resumeImg" value="/themes/${theme}/images/resume.png"/>
+<c:url var="resumeDisableImg" value="/themes/${theme}/images/resume-disabled.png"/>
+
+<fmt:message var="edit" key="pm.programe.management.action.edit"/>
+<fmt:message var="copy" key="pm.programe.management.action.copy"/>
+<fmt:message var="stop" key="pm.programe.management.action.stop"/>
+<fmt:message var="delete" key="pm.programe.management.action.delete"/>
+<fmt:message var="resume" key="pm.programe.management.action.resume"/>
+
+<td class="table-td2">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="center">
+    <c:url var="editUrl" value="/editCampaign/main.html">
+        <c:param name="campaignId" value="${programRule.id}"/>
+        <c:param name="campaignType" value="${programRule.campaignRuleType}"/>
+        <c:param name="offset" value="${pageMap.offset}"/>
+        <c:param name="isDraft" value="false"/>
+    </c:url>
+    <c:choose>
+        <c:when test="${(programRule.campaignRuleState=='PENDING_APPROVAL')}">
+            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_EDIT_BEFORE_APPROVE">
+                <a href="${editUrl}">
+                    <img alt="" title="${edit}" class="tool_icon"
+                         src="${editImg}"/>
+                </a>
+            </sec:authorize>
+            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_EDIT_BEFORE_APPROVE">
+                <a href="#"><img src="${editDisableImg}"
+                                 title="${edit}"/>
+                </a>
+            </sec:authorize>
+        </c:when>
+        <c:when test="${(programRule.campaignRuleState=='STOPPED' or programRule.campaignRuleState=='APPROVED' or programRule.campaignRuleState=='EXECUTING')}">
+            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_EDIT_AFTER_APPROVE">
+                <a href="${editUrl}">
+                    <img alt="" title="${edit}" class="tool_icon"
+                         src="${editImg}"/>
+                </a>
+            </sec:authorize>
+            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_EDIT_AFTER_APPROVE">
+                <a href="#"><img src="${editDisableImg}"
+                                 title="${edit}"/>
+                </a>
+            </sec:authorize>
+        </c:when>
+        <c:when test="${(programRule.campaignRuleState=='REJECTED')}">
+            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_EDIT">
+                <a href="${editUrl}">
+                    <img alt="" title="${edit}" class="tool_icon"
+                         src="${editImg}"/>
+                </a>
+            </sec:authorize>
+            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_EDIT">
+                <a href="#"><img src="${editDisableImg}"
+                                 title="${edit}"/>
+                </a>
+            </sec:authorize>
+        </c:when>
+        <c:otherwise>
+            <a href="#"><img src="${editDisableImg}"
+                             title="${edit}"/>
+            </a>
+
+        </c:otherwise>
+    </c:choose>
+</td>
+<c:url var="copyUrl" value="/copyCampaign/main.html">
+    <c:param name="campaignId" value="${programRule.id}"/>
+    <c:param name="offset" value="${pageMap.offset}"/>
+    <c:param name="isDraft" value="false"/>
+</c:url>
+<td align="center">
+    <c:if test="${programRule.campaignRuleType=='NORMAL' or programRule.campaignRuleType=='FIVE_DIGIT' or programRule.campaignRuleType=='EIGHT_DIGIT'}">
+        <c:choose>
+            <c:when test="${programRule.campaignRuleState=='APPROVED'||programRule.campaignRuleState=='EXECUTING'||programRule.campaignRuleState=='EXECUTED'||
+                programRule.campaignRuleState=='STOPPED'}">
+                <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_COPY">
+                    <a href="${copyUrl}">
+                        <img alt="" title="${copy}" class="tool_icon"
+                             src="${copyImg}"/>
+                    </a>
+                </sec:authorize>
+                <sec:authorize ifNotGranted="ROLE_CAMPAIGN_COPY">
+                    <a href="#">
+                        <img alt="" title="${copy}" class="tool_icon"
+                             src="${copyDisabledImg}"/>
+                    </a>
+                </sec:authorize>
+            </c:when>
+            <c:otherwise>
+                <a href="#">
+                    <img alt="" title="${copy}" class="tool_icon"
+                         src="${copyDisabledImg}"/>
+                </a>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
+    <c:if test="${programRule.campaignRuleType=='BULK'}">
+        <a href="#">
+            <img alt="" title="${copy}" class="tool_icon"
+                 src="${copyDisabledImg}"/>
+        </a>
+    </c:if>
+</td>
+<c:url var="stopUrl" value="/campaign/manageCampaign/stopCampaign.html">
+    <c:param name="programId" value="${programRule.id}"/>
+    <c:param name="state" value="${programRule.campaignRuleState}"/>
+
+</c:url>
+<c:url var="resumeUrl" value="/campaign/manageCampaign/resumeCampaign.html">
+    <c:param name="programId" value="${programRule.id}"/>
+    <c:param name="offset" value="${pageMap.offset}"/>
+</c:url>
+<td align="center">
+    <c:choose>
+        <c:when test="${programRule.campaignRuleState == 'APPROVED' or programRule.campaignRuleState == 'EXECUTING'}">
+            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_STOP">
+                <a href="#stopConfirm${programRule.id}" rel="facebox">
+                    <img src="${stopImg}" alt="" class="tool_icon" title="${stop}"/></a>
+            </sec:authorize>
+            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_STOP">
+                <a href="#">
+                    <img src="${stopDisableImg}" alt="" class="tool_icon" title="${stop}"/>
+                </a>
+            </sec:authorize>
+        </c:when>
+        <c:when test="${programRule.campaignRuleState=='STOPPED' and programRule.resumeEnabled}">
+            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_STOP">
+                <a href="#resumeConfirm${programRule.id}" rel="facebox">
+                    <img alt="" title="${resume}" class="tool_icon"
+                         src="${resumeImg}"/>
+                </a>
+            </sec:authorize>
+            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_STOP">
+                <a href="#">
+                    <img src="${resumeDisableImg}" alt="" class="tool_icon" title="${resume}"/>
+                </a>
+            </sec:authorize>
+        </c:when>
+        <c:when test="${programRule.campaignRuleState=='STOPPED' and !programRule.resumeEnabled}">
+            <a href="#">
+                <img src="${resumeDisableImg}" alt="" class="tool_icon" title="${resume}"/>
+            </a>
+        </c:when>
+        <c:otherwise>
+            <a href="#">
+                <img src="${stopDisableImg}" alt="" class="tool_icon" title="${stop}"/></a>
+        </c:otherwise>
+    </c:choose>
+</td>
+<c:url var="deleteUrl" value="/campaign/manageCampaign/deleteCampaign.html">
+    <c:param name="programId" value="${programRule.id}"/>
+    <c:param name="name" value="${programRule.name}"/>
+    <c:param name="offset" value="${pageMap.offset}"/>
+    <c:param name="state" value="${programRule.campaignRuleState}"/>
+</c:url>
+<td align="center">
+    <c:choose>
+        <c:when test="${programRule.campaignRuleState =='PENDING_APPROVAL' or programRule.campaignRuleState =='REJECTED' or  programRule.campaignRuleState =='EXPIRED'}">
+            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_DELETE">
+                <a href="#deleteConfirm${programRule.id}" rel="facebox">
+                    <img src="${deleteImg}" alt="" class="tool_icon" title="${delete}"/>
+                </a>
+            </sec:authorize>
+            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_DELETE">
+                <a href="#">
+                    <img alt="" title="${delete}" class="tool_icon"
+                         src="${deleteDisableImg}"/>
+                </a>
+            </sec:authorize>
+        </c:when>
+        <c:otherwise>
+            <a href="#">
+                <img alt="" title="${delete}" class="tool_icon"
+                     src="${deleteDisableImg}"/>
+            </a>
+        </c:otherwise>
+    </c:choose>
+</td>
+
+<div id="stopConfirm${programRule.id}" class="deleteConfirm">
+    <br/>
+
+    <div>
+        <fmt:message key="pm.stop.program.rule.confirm"/><![CDATA[&nbsp;]]>
+        <span class="note-strong">${programRule.name}</span>
+        <fmt:message key="pm.stop.program.rule.question.mark"/>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="searchbtn2">
+            <a class="button-link" type="button"
+               href="${stopUrl}"><fmt:message
+                    key="pm.event.filter.confirm.yes"/></a>
+                                                        <span>
+                                                            <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                            <![CDATA[&nbsp;]]>
+                                                        </span>
+            <a class="button-link" type="button" href="#"
+               onClick="hideFaceBox()"><fmt:message
+                    key="pm.event.filter.confirm.cancel"/></a>
+        </div>
+    </div>
+</div>
+
+<div id="resumeConfirm${programRule.id}" class="deleteConfirm">
+    <br/>
+
+    <div>
+        <fmt:message key="pm.resume.program.rule.confirm"/><![CDATA[&nbsp;]]>
+        <span class="note-strong">${programRule.name}</span>
+        <fmt:message key="pm.stop.program.rule.question.mark"/>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="searchbtn2">
+            <a class="button-link" type="button"
+               href="${resumeUrl}"><fmt:message
+                    key="pm.event.filter.confirm.yes"/></a>
+                                                        <span>
+                                                            <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                            <![CDATA[&nbsp;]]>
+                                                        </span>
+            <a class="button-link" type="button" href="#"
+               onClick="hideFaceBox()"><fmt:message
+                    key="pm.event.filter.confirm.cancel"/></a>
+        </div>
+    </div>
+</div>
+
+<div id="deleteConfirm${programRule.id}" class="deleteConfirm">
+    <br/>
+
+    <div>
+        <fmt:message key="pm.delete.program.rule.confirm"/><![CDATA[&nbsp;]]>
+        <span class="note-strong">${programRule.name}</span>
+        <fmt:message key="pm.delete.program.rule.question.mark"/>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="searchbtn2">
+            <a class="button-link" type="button"
+               href="${deleteUrl}"><fmt:message
+                    key="pm.event.filter.confirm.yes"/></a>
+                                                        <span>
+                                                            <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
+                                                            <![CDATA[&nbsp;]]>
+                                                        </span>
+            <a class="button-link" type="button" href="#"
+               onClick="hideFaceBox()"><fmt:message
+                    key="pm.event.filter.confirm.cancel"/></a>
+        </div>
+    </div>
+</div>
+
+</tr>
+</table>
+</td>
+</tr>
+</c:forEach>
+</tbody>
+</table>
+<br/>
+
+<div class="button-pane-center">
+    <div class="pagebarUTH">
+        <c:url var="myAppUrl" value="/campaign/manageCampaign/pager.html"/>
+        <pg:pager url="${myAppUrl}" export="currentPageNumber=pageNumber;"
+                  maxPageItems="${pageMap.limit}"
+                  items="${pageMap.dataListSize}"
+                  isOffset="true">
+
+            <fmt:message var="prev" key="cm.pager.prev.button"/>
+            <fmt:message var="next" key="cm.pager.next.button"/>
+            <pg:index>
+                <pg:param name="page" value="${page}"/>
+                <pg:prev><![CDATA[&nbsp;]]><a href="${pageUrl}">${prev}</a></pg:prev>
+
+                <pg:pages>
+                    <c:choose>
+                        <c:when test="${pageNumber == currentPageNumber}">
+                            <span class="this-page"><c:out value="${pageNumber}"/></span>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageUrl}"><c:out value="${pageNumber}"/></a>
+                        </c:otherwise>
+                    </c:choose>
+                </pg:pages>
+
+                <pg:next><![CDATA[&nbsp;]]><a href="${pageUrl}">${next}</a></pg:next>
+            </pg:index>
+        </pg:pager>
+
+    </div>
+</div>
+</div>
+</c:if>
+<c:if test="${fn:length(programRuleForm.campaignRules)==0}">
+    <div class="warning">
+        <fmt:message key="pm.warning.no.results.message"/>
+    </div>
+</c:if>
+
+</div>
+</div>
+
+</form:form>
+
+</div>
+
+<script type="text/javascript">
+
+    function submitForm(formId) {
+        document.getElementById(formId).submit();
+    }
+
+    function resetForm(formId) {
+        document.getElementById(formId).reset();
+    }
+
+</script>
+
+
+</jsp:root>

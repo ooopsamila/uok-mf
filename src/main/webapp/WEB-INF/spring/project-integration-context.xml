@@ -16,6 +16,7 @@
     <!-- JSR-303 support will be detected on classpath and enabled automatically -->
     <import resource="project-repository.xml"/>
     <import resource="project-service.xml"/>
+    <import resource="project-validator.xml"/>
     <mvc:annotation-driven/>
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
     <context:component-scan base-package="uok.mf"/>

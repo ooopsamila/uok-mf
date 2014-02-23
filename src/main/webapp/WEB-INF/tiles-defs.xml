@@ -42,6 +42,14 @@
         <put-attribute name="container" value="/WEB-INF/views/results/manage.jspx"/>
     </definition>
 
+    <definition name="success" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/success.jsp"/>
+    </definition>
+
+    <definition name="error" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/error.jsp"/>
+    </definition>
+
 
 
 </tiles-definitions>

@@ -5,7 +5,6 @@
           xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xmlns:form="http://www.springframework.org/tags/form"
-          xmlns:c="http://java.sun.com/jstl/core_rt"
           xsi:schemaLocation="http://www.w3c.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd">
 
     <jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
@@ -90,6 +89,15 @@
                         </div>
                     </div>
 
+                    <div class="clearfix">
+                        <div class="buttonGroup">
+                            <input type="button" class="button_left_most" value="Reset"
+                                   onclick="resetForm('addStudentsForm')"/>
+                            <input type="submit" class="button minor_margin_left" value="Submit"
+                                   onclick="submitForm('addStudentsForm')"/>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -98,9 +106,15 @@
     </div>
 
     <script type="text/javascript">
-        window.onload = function () {
-            loadMainLayOut();
+
+        function submitForm(formId) {
+            document.getElementById(formId).submit();
         }
+
+        function resetForm(formId) {
+            document.getElementById(formId).reset();
+        }
+
     </script>
 
 
