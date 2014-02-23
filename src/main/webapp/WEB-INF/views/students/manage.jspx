@@ -58,16 +58,16 @@
     </div>
 </div>
 
-<c:if test="${fn:length(ma.campaignRules) > 0}">
+<c:if test="${fn:length(manageStudentsForm.studentsList) > 0}">
 <!--<fmt:message var="page" key="pm.programe.management.tile"/>-->
 <!--<fmt:message var="viewNormalSubPage" key="pm.programe.view.sub.tile"/>-->
 <!--<fmt:message var="viewBulkSubPage" key="pm.bulk.rewards.view.title"/>-->
 <!--<fmt:message var="viewInstantSubPage" key="instant.campaign.view.sub.tile"/>-->
 
 <div class="table-content" id="display_table">
-<c:url var="excelImg" value="/themes/${theme}/images/excel.jpg"/>
-<c:url var="downloadExcelUrl" value="/campaign/manageCampaign/downloadReport.html">
-    <c:param name="type" value="xls"/>
+<c:url var="excelImg" value="/themes/orange/images/pdf.jpg"/>
+<c:url var="downloadExcelUrl" value="/manage_students/downloadReport.html">
+    <c:param name="type" value="pdf"/>
 </c:url>
 <a href="${downloadExcelUrl}"><img alt="" title="${exportExcel}" class="tool_icon"
                                    src="${excelImg}"/> <![CDATA[&nbsp;]]></a>
@@ -78,339 +78,97 @@
 <thead>
 <tr>
     <th width="27%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.name"/><span class="sort_state"/>
+        <fmt:message key="uok.mf.manage.student.index.number"/><span class="sort_state"/>
     </th>
     <th width="16%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.start.date"/><span
-            class="sort_state"/>
+        <fmt:message key="uok.mf.manage.student.nic"/><span class="sort_state"/>
     </th>
     <th width="16%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.end.date"/><span class="sort_state"/>
+        <fmt:message key="uok.mf.manage.student.name"/><span class="sort_state"/>
     </th>
     <th width="13%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.status"/><span class="sort_state"/>
+        <fmt:message key="uok.mf.manage.student.gender"/><span class="sort_state"/>
     </th>
     <th width="10%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.campaign.type"/><span
-            class="sort_state"/>
-    </th>
-    <th width="14%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.created.by"/><span
-            class="sort_state"/>
+        <fmt:message key="uok.mf.manage.student.batch"/><span class="sort_state"/>
     </th>
     <th width="15%" class="maintablehead4">
-        <fmt:message key="pm.programe.management.table.actions"/>
+        <fmt:message key="uok.mf.manage.student.action"/>
     </th>
 
 </tr>
 </thead>
 <tbody>
-<c:forEach items="${programRuleForm.campaignRules}" begin="0" var="programRule"
+<c:forEach items="${manageStudentsForm.studentsList}" begin="0" var="student"
            varStatus="listIndex">
 <tr>
 <td class="table-td2">
-    <c:url var="viewUrl" value="/campaign/manageCampaign/viewCampaign.html">
-        <c:param name="campaignId" value="${programRule.id}"/>
-        <c:param name="campaignType" value="${programRule.campaignRuleType}"/>
-        <c:param name="offset" value="${pageMap.offset}"/>
-        <c:param name="page" value="${page}"/>
-        <c:choose>
-            <c:when test="${programRule.campaignRuleType =='NORMAL'}">
-                <c:param name="subPage" value="${viewNormalSubPage}"/>
-            </c:when>
-            <c:when test="${programRule.campaignRuleType =='BULK'}">
-                <c:param name="subPage" value="${viewBulkSubPage}"/>
-            </c:when>
-            <c:otherwise>
-                <c:param name="subPage" value="${viewInstantSubPage}"/>
-            </c:otherwise>
-        </c:choose>
-    </c:url>
-    <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_VIEW">
-        <a href="${viewUrl}"><c:out value="${programRule.name}"/></a>
-    </sec:authorize>
-    <sec:authorize ifNotGranted="ROLE_CAMPAIGN_VIEW">
-        <a href="#"><c:out value="${programRule.name}"/></a>
-    </sec:authorize>
+    <c:out value="${student.indexNumber}"/>
 </td>
 <td class="table-td2">
-    <fmt:formatDate value="${programRule.startDate}" pattern="dd-MMM-yyyy HH:mm" var="stDate"/>
-    ${stDate}
+    <c:out value="${student.nic}"/>
 </td>
 <td class="table-td2">
-    <fmt:formatDate value="${programRule.endDate}" pattern="dd-MMM-yyyy HH:mm" var="endDate"/>
-    ${endDate}
+    <c:out value="${student.name}"/>
 </td>
 <td class="table-td2">
-    ${programRule.campaignRuleState}
+    <c:out value="${student.gender}"/>
 </td>
 <td class="table-td2">
-    ${programRule.campaignRuleType}
-</td>
-<td class="table-td2">
-    ${programRule.author}
+    <c:out value="${student.batch}"/>
 </td>
 
 <c:url var="editImg" value="/themes/${theme}/images/edit.png"/>
-<c:url var="editDisableImg" value="/themes/${theme}/images/edit_dis.png"/>
-<c:url var="copyImg" value="/themes/${theme}/images/copy.png"/>
-<c:url var="copyDisabledImg" value="/themes/${theme}/images/copy_d.png"/>
 <c:url var="deleteImg" value="/themes/${theme}/images/close.png"/>
-<c:url var="deleteDisableImg" value="/themes/${theme}/images/close_dis.png"/>
-<c:url var="stopImg" value="/themes/${theme}/images/stop.png"/>
-<c:url var="stopDisableImg" value="/themes/${theme}/images/stop-disabled.png"/>
-<c:url var="resumeImg" value="/themes/${theme}/images/resume.png"/>
-<c:url var="resumeDisableImg" value="/themes/${theme}/images/resume-disabled.png"/>
 
-<fmt:message var="edit" key="pm.programe.management.action.edit"/>
-<fmt:message var="copy" key="pm.programe.management.action.copy"/>
-<fmt:message var="stop" key="pm.programe.management.action.stop"/>
-<fmt:message var="delete" key="pm.programe.management.action.delete"/>
-<fmt:message var="resume" key="pm.programe.management.action.resume"/>
+<fmt:message var="edit" key="uok.mf.action.edit"/>
+<fmt:message var="delete" key="uok.mf.action.delete"/>
 
 <td class="table-td2">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td align="center">
-    <c:url var="editUrl" value="/editCampaign/main.html">
-        <c:param name="campaignId" value="${programRule.id}"/>
-        <c:param name="campaignType" value="${programRule.campaignRuleType}"/>
-        <c:param name="offset" value="${pageMap.offset}"/>
-        <c:param name="isDraft" value="false"/>
+    <c:url var="editUrl" value="/edit_students.html">
+        <c:param name="indexNumber" value="${student.indexNumber}"/>
     </c:url>
-    <c:choose>
-        <c:when test="${(programRule.campaignRuleState=='PENDING_APPROVAL')}">
-            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_EDIT_BEFORE_APPROVE">
-                <a href="${editUrl}">
-                    <img alt="" title="${edit}" class="tool_icon"
-                         src="${editImg}"/>
-                </a>
-            </sec:authorize>
-            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_EDIT_BEFORE_APPROVE">
-                <a href="#"><img src="${editDisableImg}"
-                                 title="${edit}"/>
-                </a>
-            </sec:authorize>
-        </c:when>
-        <c:when test="${(programRule.campaignRuleState=='STOPPED' or programRule.campaignRuleState=='APPROVED' or programRule.campaignRuleState=='EXECUTING')}">
-            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_EDIT_AFTER_APPROVE">
-                <a href="${editUrl}">
-                    <img alt="" title="${edit}" class="tool_icon"
-                         src="${editImg}"/>
-                </a>
-            </sec:authorize>
-            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_EDIT_AFTER_APPROVE">
-                <a href="#"><img src="${editDisableImg}"
-                                 title="${edit}"/>
-                </a>
-            </sec:authorize>
-        </c:when>
-        <c:when test="${(programRule.campaignRuleState=='REJECTED')}">
-            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_EDIT">
-                <a href="${editUrl}">
-                    <img alt="" title="${edit}" class="tool_icon"
-                         src="${editImg}"/>
-                </a>
-            </sec:authorize>
-            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_EDIT">
-                <a href="#"><img src="${editDisableImg}"
-                                 title="${edit}"/>
-                </a>
-            </sec:authorize>
-        </c:when>
-        <c:otherwise>
-            <a href="#"><img src="${editDisableImg}"
-                             title="${edit}"/>
-            </a>
-
-        </c:otherwise>
-    </c:choose>
-</td>
-<c:url var="copyUrl" value="/copyCampaign/main.html">
-    <c:param name="campaignId" value="${programRule.id}"/>
-    <c:param name="offset" value="${pageMap.offset}"/>
-    <c:param name="isDraft" value="false"/>
-</c:url>
-<td align="center">
-    <c:if test="${programRule.campaignRuleType=='NORMAL' or programRule.campaignRuleType=='FIVE_DIGIT' or programRule.campaignRuleType=='EIGHT_DIGIT'}">
-        <c:choose>
-            <c:when test="${programRule.campaignRuleState=='APPROVED'||programRule.campaignRuleState=='EXECUTING'||programRule.campaignRuleState=='EXECUTED'||
-                programRule.campaignRuleState=='STOPPED'}">
-                <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_COPY">
-                    <a href="${copyUrl}">
-                        <img alt="" title="${copy}" class="tool_icon"
-                             src="${copyImg}"/>
-                    </a>
-                </sec:authorize>
-                <sec:authorize ifNotGranted="ROLE_CAMPAIGN_COPY">
-                    <a href="#">
-                        <img alt="" title="${copy}" class="tool_icon"
-                             src="${copyDisabledImg}"/>
-                    </a>
-                </sec:authorize>
-            </c:when>
-            <c:otherwise>
-                <a href="#">
-                    <img alt="" title="${copy}" class="tool_icon"
-                         src="${copyDisabledImg}"/>
-                </a>
-            </c:otherwise>
-        </c:choose>
-    </c:if>
-    <c:if test="${programRule.campaignRuleType=='BULK'}">
-        <a href="#">
-            <img alt="" title="${copy}" class="tool_icon"
-                 src="${copyDisabledImg}"/>
-        </a>
-    </c:if>
-</td>
-<c:url var="stopUrl" value="/campaign/manageCampaign/stopCampaign.html">
-    <c:param name="programId" value="${programRule.id}"/>
-    <c:param name="state" value="${programRule.campaignRuleState}"/>
-
-</c:url>
-<c:url var="resumeUrl" value="/campaign/manageCampaign/resumeCampaign.html">
-    <c:param name="programId" value="${programRule.id}"/>
-    <c:param name="offset" value="${pageMap.offset}"/>
-</c:url>
-<td align="center">
-    <c:choose>
-        <c:when test="${programRule.campaignRuleState == 'APPROVED' or programRule.campaignRuleState == 'EXECUTING'}">
-            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_STOP">
-                <a href="#stopConfirm${programRule.id}" rel="facebox">
-                    <img src="${stopImg}" alt="" class="tool_icon" title="${stop}"/></a>
-            </sec:authorize>
-            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_STOP">
-                <a href="#">
-                    <img src="${stopDisableImg}" alt="" class="tool_icon" title="${stop}"/>
-                </a>
-            </sec:authorize>
-        </c:when>
-        <c:when test="${programRule.campaignRuleState=='STOPPED' and programRule.resumeEnabled}">
-            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_STOP">
-                <a href="#resumeConfirm${programRule.id}" rel="facebox">
-                    <img alt="" title="${resume}" class="tool_icon"
-                         src="${resumeImg}"/>
-                </a>
-            </sec:authorize>
-            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_STOP">
-                <a href="#">
-                    <img src="${resumeDisableImg}" alt="" class="tool_icon" title="${resume}"/>
-                </a>
-            </sec:authorize>
-        </c:when>
-        <c:when test="${programRule.campaignRuleState=='STOPPED' and !programRule.resumeEnabled}">
-            <a href="#">
-                <img src="${resumeDisableImg}" alt="" class="tool_icon" title="${resume}"/>
-            </a>
-        </c:when>
-        <c:otherwise>
-            <a href="#">
-                <img src="${stopDisableImg}" alt="" class="tool_icon" title="${stop}"/></a>
-        </c:otherwise>
-    </c:choose>
-</td>
-<c:url var="deleteUrl" value="/campaign/manageCampaign/deleteCampaign.html">
-    <c:param name="programId" value="${programRule.id}"/>
-    <c:param name="name" value="${programRule.name}"/>
-    <c:param name="offset" value="${pageMap.offset}"/>
-    <c:param name="state" value="${programRule.campaignRuleState}"/>
-</c:url>
-<td align="center">
-    <c:choose>
-        <c:when test="${programRule.campaignRuleState =='PENDING_APPROVAL' or programRule.campaignRuleState =='REJECTED' or  programRule.campaignRuleState =='EXPIRED'}">
-            <sec:authorize ifAnyGranted="ROLE_CAMPAIGN_DELETE">
-                <a href="#deleteConfirm${programRule.id}" rel="facebox">
-                    <img src="${deleteImg}" alt="" class="tool_icon" title="${delete}"/>
-                </a>
-            </sec:authorize>
-            <sec:authorize ifNotGranted="ROLE_CAMPAIGN_DELETE">
-                <a href="#">
-                    <img alt="" title="${delete}" class="tool_icon"
-                         src="${deleteDisableImg}"/>
-                </a>
-            </sec:authorize>
-        </c:when>
-        <c:otherwise>
-            <a href="#">
-                <img alt="" title="${delete}" class="tool_icon"
-                     src="${deleteDisableImg}"/>
-            </a>
-        </c:otherwise>
-    </c:choose>
+    <a href="${editUrl}">
+        <img alt="" title="${edit}" class="tool_icon"
+             src="${editImg}"/>
+    </a>
 </td>
 
-<div id="stopConfirm${programRule.id}" class="deleteConfirm">
+<c:url var="deleteUrl" value="/manage_students/delete.html">
+    <c:param name="indexNumber" value="${student.indexNumber}"/>
+</c:url>
+<td align="center">
+    <a href="#deleteConfirm${student.indexNumber}" rel="facebox">
+        <img src="${deleteImg}" alt="" class="tool_icon" title="${delete}"/>
+    </a>
+</td>
+
+
+
+<div id="deleteConfirm${student.indexNumber}" class="deleteConfirm">
     <br/>
 
     <div>
-        <fmt:message key="pm.stop.program.rule.confirm"/><![CDATA[&nbsp;]]>
-        <span class="note-strong">${programRule.name}</span>
-        <fmt:message key="pm.stop.program.rule.question.mark"/>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="searchbtn2">
-            <a class="button-link" type="button"
-               href="${stopUrl}"><fmt:message
-                    key="pm.event.filter.confirm.yes"/></a>
-                                                        <span>
-                                                            <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                            <![CDATA[&nbsp;]]>
-                                                        </span>
-            <a class="button-link" type="button" href="#"
-               onClick="hideFaceBox()"><fmt:message
-                    key="pm.event.filter.confirm.cancel"/></a>
-        </div>
-    </div>
-</div>
-
-<div id="resumeConfirm${programRule.id}" class="deleteConfirm">
-    <br/>
-
-    <div>
-        <fmt:message key="pm.resume.program.rule.confirm"/><![CDATA[&nbsp;]]>
-        <span class="note-strong">${programRule.name}</span>
-        <fmt:message key="pm.stop.program.rule.question.mark"/>
-    </div>
-    <hr/>
-    <div class="row">
-        <div class="searchbtn2">
-            <a class="button-link" type="button"
-               href="${resumeUrl}"><fmt:message
-                    key="pm.event.filter.confirm.yes"/></a>
-                                                        <span>
-                                                            <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
-                                                            <![CDATA[&nbsp;]]>
-                                                        </span>
-            <a class="button-link" type="button" href="#"
-               onClick="hideFaceBox()"><fmt:message
-                    key="pm.event.filter.confirm.cancel"/></a>
-        </div>
-    </div>
-</div>
-
-<div id="deleteConfirm${programRule.id}" class="deleteConfirm">
-    <br/>
-
-    <div>
-        <fmt:message key="pm.delete.program.rule.confirm"/><![CDATA[&nbsp;]]>
-        <span class="note-strong">${programRule.name}</span>
-        <fmt:message key="pm.delete.program.rule.question.mark"/>
+        <fmt:message key="uok.mf.delete.student.confirm"/><![CDATA[&nbsp;]]>
+        <span class="note-strong">${student.indexNumber}</span>
+        <fmt:message key="uok.mf.action.question.mark"/>
     </div>
     <hr/>
     <div class="row">
         <div class="searchbtn2">
             <a class="button-link" type="button"
                href="${deleteUrl}"><fmt:message
-                    key="pm.event.filter.confirm.yes"/></a>
+                    key="uok.mf.action.confirm.yes"/></a>
                                                         <span>
                                                             <![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]>
                                                             <![CDATA[&nbsp;]]>
                                                         </span>
             <a class="button-link" type="button" href="#"
                onClick="hideFaceBox()"><fmt:message
-                    key="pm.event.filter.confirm.cancel"/></a>
+                    key="uok.mf.action.confirm.cancel"/></a>
         </div>
     </div>
 </div>
@@ -426,14 +184,14 @@
 
 <div class="button-pane-center">
     <div class="pagebarUTH">
-        <c:url var="myAppUrl" value="/campaign/manageCampaign/pager.html"/>
+        <c:url var="myAppUrl" value="/manage_students/pager.html"/>
         <pg:pager url="${myAppUrl}" export="currentPageNumber=pageNumber;"
                   maxPageItems="${pageMap.limit}"
                   items="${pageMap.dataListSize}"
                   isOffset="true">
 
-            <fmt:message var="prev" key="cm.pager.prev.button"/>
-            <fmt:message var="next" key="cm.pager.next.button"/>
+            <fmt:message var="prev" key="uok.mf.pager.prev.button"/>
+            <fmt:message var="next" key="uok.mf.pager.next.button"/>
             <pg:index>
                 <pg:param name="page" value="${page}"/>
                 <pg:prev><![CDATA[&nbsp;]]><a href="${pageUrl}">${prev}</a></pg:prev>
@@ -459,7 +217,7 @@
 </c:if>
 <c:if test="${fn:length(programRuleForm.campaignRules)==0}">
     <div class="warning">
-        <fmt:message key="pm.warning.no.results.message"/>
+        <fmt:message key="uok.mf.warning.no.results.message"/>
     </div>
 </c:if>
 
@@ -479,6 +237,25 @@
     function resetForm(formId) {
         document.getElementById(formId).reset();
     }
+
+    $(document).ready(function () {
+        $("#program_rule_list_table").tablesorter();
+
+        $("#program_rule_list_table tbody tr").hover(function () {
+            $(this).addClass("report_table_content_hover");
+        }, function () {
+            $(this).removeClass("report_table_content_hover");
+        });
+
+    });
+    function hideFaceBox() {
+        $(document).trigger('close.facebox')
+    }
+
+
+    $(document).ready(function () {
+        $('a[rel*=facebox]').facebox();
+    });
 
 </script>
 
