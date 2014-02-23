@@ -78,6 +78,92 @@ public class StudentsRepositoryImpl extends JdbcDaoSupport implements StudentsRe
         return getJdbcTemplate().queryForInt(getTotalNoOfStudentsSql);
     }
 
+    @Override
+    public void deleteByIndex(String indexNumber) throws DataAccessException {
+        Object[] params = new Object[]{indexNumber};
+        final String deleteByIndexSql = "delete from students where index_no=?";
+        try {
+            getJdbcTemplate().update(deleteByIndexSql, params);
+        } catch (org.springframework.dao.DataAccessException e) {
+            throw new DataAccessException("Error occurred while deleting", e);
+        }
+    }
+
+    @Override
+    public List<Students> getStudentsByBatch(String batch, int offset, int limit) throws DataAccessException {
+        List<Students> studentsList = null;
+
+        final String getStudentsByBatchSql =
+                "SELECT * from students where batch = ? limit ?, ?";
+
+        Object[] params = new Object[]{batch, offset, limit};
+
+        try {
+            studentsList = getJdbcTemplate().query(getStudentsByBatchSql,
+                    params, new StudentsRowMapper());
+            return studentsList;
+        } catch (org.springframework.dao.DataAccessException e) {
+            throw new DataAccessException("Error occurred while finding students by batch", e);
+        }
+    }
+
+    @Override
+    public int getNoOfStudentsByBatch(String batch) {
+        Object[] params = new Object[]{batch};
+        final String getNoOfStudentsByBatchSql = "SELECT count(index_no) from students where batch = ?";
+        return getJdbcTemplate().queryForInt(getNoOfStudentsByBatchSql, params);
+    }
+
+    @Override
+    public List<Students> getStudentsByIndex(String index, int offset, int limit) throws DataAccessException {
+        List<Students> studentsList = null;
+
+        final String getStudentsByIndexSql =
+                "SELECT * from students where index_no = ? limit ?, ?";
+
+        Object[] params = new Object[]{index, offset, limit};
+
+        try {
+            studentsList = getJdbcTemplate().query(getStudentsByIndexSql,
+                    params, new StudentsRowMapper());
+            return studentsList;
+        } catch (org.springframework.dao.DataAccessException e) {
+            throw new DataAccessException("Error occurred while finding students by index", e);
+        }
+    }
+
+    @Override
+    public int getNoOfStudentsByIndex(String index) {
+        Object[] params = new Object[]{index};
+        final String getNoOfStudentsByIndexSql = "SELECT count(index_no) from students where index_no = ?";
+        return getJdbcTemplate().queryForInt(getNoOfStudentsByIndexSql, params);
+    }
+
+    @Override
+    public List<Students> getStudentsByIndexAndBatch(String index, String batch, int offset, int limit) throws DataAccessException {
+        List<Students> studentsList = null;
+
+        final String getStudentsByIndexAndBatchSql =
+                "SELECT * from students where index_no = ? and batch = ? limit ?, ?";
+
+        Object[] params = new Object[]{index, batch, offset, limit};
+
+        try {
+            studentsList = getJdbcTemplate().query(getStudentsByIndexAndBatchSql,
+                    params, new StudentsRowMapper());
+            return studentsList;
+        } catch (org.springframework.dao.DataAccessException e) {
+            throw new DataAccessException("Error occurred while finding students by indexnd batch a", e);
+        }
+    }
+
+    @Override
+    public int getNoOfStudentsByIndexAndBatch(String index, String batch) {
+        Object[] params = new Object[]{index, batch};
+        final String getNoOfStudentsByIndexAndBatchSql = "SELECT count(index_no) from students where index_no = ? and batch = ?";
+        return getJdbcTemplate().queryForInt(getNoOfStudentsByIndexAndBatchSql, params);
+    }
+
     private class StudentsRowMapper implements RowMapper {
 
         @Override

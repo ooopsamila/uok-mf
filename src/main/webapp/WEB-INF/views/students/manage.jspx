@@ -77,22 +77,22 @@
 
 <thead>
 <tr>
-    <th width="27%" class="maintablehead4">
+    <th width="15%" class="maintablehead4">
         <fmt:message key="uok.mf.manage.student.index.number"/><span class="sort_state"/>
     </th>
-    <th width="16%" class="maintablehead4">
+    <th width="15%" class="maintablehead4">
         <fmt:message key="uok.mf.manage.student.nic"/><span class="sort_state"/>
     </th>
-    <th width="16%" class="maintablehead4">
+    <th width="30%" class="maintablehead4">
         <fmt:message key="uok.mf.manage.student.name"/><span class="sort_state"/>
     </th>
-    <th width="13%" class="maintablehead4">
+    <th width="10%" class="maintablehead4">
         <fmt:message key="uok.mf.manage.student.gender"/><span class="sort_state"/>
     </th>
-    <th width="10%" class="maintablehead4">
+    <th width="20%" class="maintablehead4">
         <fmt:message key="uok.mf.manage.student.batch"/><span class="sort_state"/>
     </th>
-    <th width="15%" class="maintablehead4">
+    <th width="10%" class="maintablehead4">
         <fmt:message key="uok.mf.manage.student.action"/>
     </th>
 
@@ -118,8 +118,8 @@
     <c:out value="${student.batch}"/>
 </td>
 
-<c:url var="editImg" value="/themes/${theme}/images/edit.png"/>
-<c:url var="deleteImg" value="/themes/${theme}/images/close.png"/>
+<c:url var="editImg" value="/themes/orange/images/edit.png"/>
+<c:url var="deleteImg" value="/themes/orange/images/close.png"/>
 
 <fmt:message var="edit" key="uok.mf.action.edit"/>
 <fmt:message var="delete" key="uok.mf.action.delete"/>
@@ -215,7 +215,7 @@
 </div>
 </div>
 </c:if>
-<c:if test="${fn:length(programRuleForm.campaignRules)==0}">
+<c:if test="${fn:length(manageStudentsForm.studentsList)==0}">
     <div class="warning">
         <fmt:message key="uok.mf.warning.no.results.message"/>
     </div>

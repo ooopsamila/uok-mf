@@ -19,4 +19,18 @@ public interface StudentsRepository {
     public List<Students> getAllStudents(int offset, int limit) throws DataAccessException;
 
     public int getTotalNoOfStudents();
+
+    public void deleteByIndex(String indexNumber) throws DataAccessException;
+
+    public List<Students> getStudentsByBatch(String batch, int offset, int limit) throws DataAccessException;
+
+    public int getNoOfStudentsByBatch(String batch);
+
+    public List<Students> getStudentsByIndex(String index, int offset, int limit) throws DataAccessException;
+
+    public int getNoOfStudentsByIndex(String index);
+
+    public List<Students> getStudentsByIndexAndBatch(String index, String batch, int offset, int limit) throws DataAccessException;
+
+    public int getNoOfStudentsByIndexAndBatch(String index, String batch);
 }
