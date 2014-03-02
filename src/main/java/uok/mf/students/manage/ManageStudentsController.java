@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uok.mf.domain.impl.DataAccessException;
+import uok.mf.reporttemplate.impl.ReportViewer;
 import uok.mf.service.StudentsService;
 
 import java.util.HashMap;
@@ -64,5 +65,15 @@ public class ManageStudentsController {
         model.addAttribute("manageStudentsForm", manageStudentsForm);
         model.addAttribute("pageMap", pageMap);
         return new ModelAndView(view, "model", model);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/downloadReport")
+    public ModelAndView downloadReportAs(@ModelAttribute("manageStudentsForm") ManageStudentsForm manageStudentsForm,
+                                                 @RequestParam("type") String type) throws Exception {
+//        logger.info("Request received to download the report as {} type", type);
+        Map model = new HashMap();
+        ReportViewer reportViewer = new ReportViewer();
+        model = studentsService.generateReport(manageStudentsForm, type);
+        return new ModelAndView(reportViewer, model);
     }
 }

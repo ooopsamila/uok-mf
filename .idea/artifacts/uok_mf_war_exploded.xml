@@ -59,6 +59,18 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-orm:3.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-oxm:3.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.5" />
+          <element id="library" level="project" name="Maven: com.lowagie:itext:2.1.7" />
+          <element id="library" level="project" name="Maven: bouncycastle:bcmail-jdk14:138" />
+          <element id="library" level="project" name="Maven: bouncycastle:bcprov-jdk14:138" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.5-FINAL" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml:3.5-FINAL" />
+          <element id="library" level="project" name="Maven: org.apache.poi:ooxml-schemas:1.0" />
+          <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.3.0" />
+          <element id="library" level="project" name="Maven: stax:stax-api:1.0.1" />
+          <element id="library" level="project" name="Maven: dom4j:dom4j:1.6.1" />
         </element>
       </element>
     </root>
