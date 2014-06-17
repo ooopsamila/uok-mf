@@ -23,7 +23,7 @@ public class StudentsService {
     @Autowired
     private StudentsRepository studentsRepository;
     private int limit;
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public void createStudent(AddStudentForm addStudentForm) throws DataAccessException {
         StudentsImpl studentsImpl = new StudentsImpl();
@@ -36,9 +36,9 @@ public class StudentsService {
     }
 
     public void populateManageStudentsForm(ManageStudentsForm manageStudentsForm, Map pageMap, int offset) throws DataAccessException {
-        String index = manageStudentsForm.getIndexNumber();
-        String batch = manageStudentsForm.getBatch();
-        List<Students> studentsList = new ArrayList<Students>();
+        final String index = manageStudentsForm.getIndexNumber();
+        final String batch = manageStudentsForm.getBatch();
+        List<Students> studentsList = new ArrayList();
         int dataListSize = 0;
         if ((index == null || index.equals("")) && (batch == null || batch.equals(""))) {
             studentsList = studentsRepository.getAllStudents(offset, limit);
@@ -73,9 +73,9 @@ public class StudentsService {
     public Map generateReport(ManageStudentsForm manageStudentsForm, String type) throws DataAccessException {
         ReportTemplate studentReport = new ReportTemplateImpl();
         studentReport.setHeader("Manage Students Report");
-        String index = manageStudentsForm.getIndexNumber();
-        String batch = manageStudentsForm.getBatch();
-        List<Students> studentsList = new ArrayList<Students>();
+        final String index = manageStudentsForm.getIndexNumber();
+        final String batch = manageStudentsForm.getBatch();
+        List<Students> studentsList = new ArrayList();
         if ((index == null || index.equals("")) && (batch == null || batch.equals(""))) {
             studentsList = studentsRepository.getAllStudents(0, limit);
             studentReport.setSubHeader("");
@@ -91,7 +91,7 @@ public class StudentsService {
         }
 
         studentReport.setColHeaders(new String[]{"Index Number", "NIC", "Name", "Gender", "Batch"});
-        List<String[]> dataStrings = new ArrayList<String[]>();
+        List<String[]> dataStrings = new ArrayList();
         String[] column;
         for (Students students : studentsList) {
             column = new String[5];

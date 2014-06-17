@@ -37,7 +37,7 @@ public class AddStudentsController {
     public ModelAndView submitForm(@ModelAttribute("addStudentsForm") AddStudentForm addStudentForm, BindingResult result) {
         addStudentsValidator.validate(addStudentForm, result);
         if (!result.hasErrors()) {
-            Map<String, String> model = new HashMap<String, String>();
+            Map<String, String> model = new HashMap();
             try {
                 studentsService.createStudent(addStudentForm);
                 model.put("successMessage", "uok.mf.add.students.success");

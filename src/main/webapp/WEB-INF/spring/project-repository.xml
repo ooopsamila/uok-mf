@@ -44,4 +44,7 @@
     <bean id="resultsRepository" class="uok.mf.repositories.impl.ResultsRepositoryImpl"
           p:jdbcTemplate-ref="jdbcTemplate"/>
 
+    <bean id="batchRepository" class="uok.mf.repositories.impl.BatchRepositoryImpl"
+          p:jdbcTemplate-ref="jdbcTemplate"/>
+
 </beans>

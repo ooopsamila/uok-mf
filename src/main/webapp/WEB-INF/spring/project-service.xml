@@ -11,4 +11,6 @@
 
     <bean id="resultsService" class="uok.mf.service.ResultsService"/>
 
+    <bean id="batchService" class="uok.mf.service.BatchService"/>
+
 </beans>

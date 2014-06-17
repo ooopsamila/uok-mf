@@ -21,12 +21,12 @@ public class AddStudentsValidator extends CommonValidator implements Validator {
 
     @Override
     public void validate(Object object, Errors errors) {
-        AddStudentForm addStudentForm = (AddStudentForm) object;
-        String indexNumber = addStudentForm.getIndexNumber();
-        String nic = addStudentForm.getNic();
-        String name = addStudentForm.getName();
-        String gender = addStudentForm.getGender();
-        String batch = addStudentForm.getBatch();
+        final AddStudentForm addStudentForm = (AddStudentForm) object;
+        final String indexNumber = addStudentForm.getIndexNumber();
+        final String nic = addStudentForm.getNic();
+        final String name = addStudentForm.getName();
+        final String gender = addStudentForm.getGender();
+        final String batch = addStudentForm.getBatch();
 
         if (isEmpty(indexNumber)) {
             errors.rejectValue("indexNumber", "uok.mf.validation.students.index.number.empty");

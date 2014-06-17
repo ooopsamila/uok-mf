@@ -17,4 +17,6 @@
 
     <bean id="manageResultsValidator" class="uok.mf.results.manage.ManageResultsValidator"/>
 
+    <bean id="addBatchValidator" class="uok.mf.batch.add.AddBatchValidator"/>
+
 </beans>

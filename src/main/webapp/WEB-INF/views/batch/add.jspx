@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding='utf-8'?>
+
+<jsp:root version="2.0" xmlns="http://www.w3c.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:form="http://www.springframework.org/tags/form"
+          xsi:schemaLocation="http://www.w3c.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd">
+
+    <jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
+                doctype-system="http://www.w3.org/TR/html4/loose.dtd"
+                doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"/>
+    <jsp:directive.page contentType="text/html;charset=windows-1252"/>
+    <jsp:directive.page buffer="70kb" autoFlush="true"/>
+
+
+    <div id="container" class="slider-wrap">
+
+        <form:form id="addBatchForm" commandName="addBatchForm" modelAttribute="addBatchForm" method="post"
+                   enctype="multipart/form-data">
+            <div class="h1_colour-padded">
+                <fmt:message key="uok.mf.add.batch.title"/>
+            </div>
+            <div class="content">
+                <div class="stripViewer">
+
+
+                    <div class="clearfix">
+                        <div class="table-cell">
+                            <label for="name" class="required"><fmt:message
+                                    key="uok.mf.add.batch.name"/>
+                            </label>
+                        </div>
+                        <div class="table-cell">
+                            <form:errors path="name" element="div" cssClass="error_message_above_field"/>
+                            <form:input path="name" id="name" cssClass="text_box_medium" maxlength="45"/>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div class="table-cell">
+                            <label for="year" class="required"><fmt:message
+                                    key="uok.mf.add.batch.year"/>
+                            </label>
+                        </div>
+                        <div class="table-cell">
+                            <form:errors path="year" element="div" cssClass="error_message_above_field"/>
+                            <form:input path="year" id="year" cssClass="text_box_medium" maxlength="10"/>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div class="buttonGroup">
+                            <input type="button" class="button_left_most" value="Reset"
+                                   onclick="resetForm('addBatchForm')"/>
+                            <input type="submit" class="button minor_margin_left" value="Submit"
+                                   onclick="submitForm('addBatchForm')"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </form:form>
+
+    </div>
+
+    <script type="text/javascript">
+
+        function submitForm(formId) {
+            document.getElementById(formId).submit();
+        }
+
+        function resetForm(formId) {
+            document.getElementById(formId).reset();
+        }
+
+    </script>
+
+
+</jsp:root>
