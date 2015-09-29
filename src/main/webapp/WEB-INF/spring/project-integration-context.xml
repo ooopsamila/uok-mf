@@ -19,7 +19,7 @@
     <import resource="project-validator.xml"/>
     <mvc:annotation-driven/>
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
-    <context:component-scan base-package="uok.mf"/>
+    <context:component-scan base-package="diya.dahara"/>
     <context:property-placeholder location="classpath:messages_en.properties, classpath:connectivity.properties, classpath:system.properties"/>
 
     <!-- Forwards requests to the "/" resource to the "welcome" view -->

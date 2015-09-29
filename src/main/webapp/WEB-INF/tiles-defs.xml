@@ -18,36 +18,32 @@
         <put-attribute name="container" value="/WEB-INF/views/welcome.jsp"/>
     </definition>
 
-    <definition name="add_students" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/students/add.jspx"/>
+    <definition name="contact" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/contact.jsp"/>
     </definition>
 
-    <definition name="manage_students" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/students/manage.jspx"/>
+    <definition name="food" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/food.jsp"/>
     </definition>
 
-    <definition name="add_subjects" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/subjects/add.jspx"/>
+    <definition name="room" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/room.jsp"/>
     </definition>
 
-    <definition name="manage_subjects" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/subjects/manage.jspx"/>
+    <definition name="table" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/table.jsp"/>
     </definition>
 
-    <definition name="add_results" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/results/add.jspx"/>
+    <definition name="orderTable" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/orderTable.jsp"/>
     </definition>
 
-    <definition name="manage_results" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/results/manage.jspx"/>
+    <definition name="tour" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/tour.jsp"/>
     </definition>
 
-    <definition name="add_batch" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/batch/add.jspx"/>
-    </definition>
-
-    <definition name="manage_batch" extends="baseLayout">
-        <put-attribute name="container" value="/WEB-INF/views/batch/manage.jspx"/>
+    <definition name="checkIn" extends="baseLayout">
+        <put-attribute name="container" value="/WEB-INF/views/checkIn.jsp"/>
     </definition>
 
     <definition name="success" extends="baseLayout">

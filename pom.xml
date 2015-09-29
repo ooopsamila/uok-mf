@@ -8,7 +8,7 @@
     <name>uok-mf</name>
 
     <properties>
-        <spring.version>3.2.0.RELEASE</spring.version>
+        <spring.version>4.1.2.RELEASE</spring.version>
         <tiles.version>2.2.2</tiles.version>
         <hibernate.version>3.5.4-Final</hibernate.version>
         <hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>2.0.6</version>
+            <version>${spring.version}</version>
         </dependency>
 
 
@@ -316,8 +316,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>

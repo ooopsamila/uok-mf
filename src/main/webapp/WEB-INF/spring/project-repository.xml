@@ -30,21 +30,21 @@
 
     </bean>
 
-
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
           p:dataSource-ref="productionDataSource"/>
 
 
-    <bean id="studentsRepository" class="uok.mf.repositories.impl.StudentsRepositoryImpl"
+    <bean id="roomRepository" class="diya.dahara.repositories.impl.RoomRepositoryImpl"
           p:jdbcTemplate-ref="jdbcTemplate"/>
 
-    <bean id="subjectsRepository" class="uok.mf.repositories.impl.SubjectRepositoryImpl"
+    <bean id="foodRepository" class="diya.dahara.repositories.impl.FoodRepositoryImpl"
           p:jdbcTemplate-ref="jdbcTemplate"/>
 
-    <bean id="resultsRepository" class="uok.mf.repositories.impl.ResultsRepositoryImpl"
+    <bean id="tableRepository" class="diya.dahara.repositories.impl.TableRepositoryImpl"
           p:jdbcTemplate-ref="jdbcTemplate"/>
 
-    <bean id="batchRepository" class="uok.mf.repositories.impl.BatchRepositoryImpl"
+    <bean id="customerRepository" class="diya.dahara.repositories.impl.CustomerRepositoryImpl"
           p:jdbcTemplate-ref="jdbcTemplate"/>
+
 
 </beans>

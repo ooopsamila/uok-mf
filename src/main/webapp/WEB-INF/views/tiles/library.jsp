@@ -2,21 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/sdmenu.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/grid.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/modal.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/secondary.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/slider.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/notification.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/facebox.css" />"/>
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/datetimepicker/jquery-ui.css" />"/>
-<link rel="stylesheet" type="text/css"
-      href="<c:url value="/themes/orange/css/datetimepicker/jquery-ui-timepicker-addon.css" />"/>
-
-
-<!--main css -->
-<link rel="stylesheet" type="text/css" href="<c:url value="/themes/orange/css/main.css" />"/>
-
 <script type="text/javascript">
     var theme = 'orange';
 </script>
@@ -61,10 +46,6 @@
 <script type="text/javascript" src="<c:url value="/resources/js/nav/jquery-easing.1.2.pack.js" />">
     //
 </script>
-
-<script type="text/javascript" src="<c:url value="/resources/dojo/dojo.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/spring/Spring.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/spring/Spring-Dojo.js" />"></script>
 
 <script type="text/javascript" src="<c:url value="/resources/js/datetimepicker/jquery-ui.min.js"/>">
     // adding jquery javascript library - jQuery UI

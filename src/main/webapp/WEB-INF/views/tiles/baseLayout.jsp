@@ -16,46 +16,21 @@
     <meta http-equiv="pragma" content="no-cache"/>
     <meta http-equiv="cache-control" content="max-age=0, no-cache, no-store, must-revalidate"/>
 
-    <title><%out.print("uok-mf");%></title>
+    <title><%out.print("Diya Dahara");%></title>
 
     <jsp:include page="library.jsp"/>
 
 
 </head>
 <body>
-<div class="maincontent" id="custom-doc" align="center">
-    <div id="hd" align="center">
-        <%--<tiles:insertAttribute name="header" />--%>
-    </div>
-    <div id="bd" align="center">
-        <div id="wrapper">
-            <div>
-                <tiles:insertAttribute name="menu" />
-            </div>
-            <div class="bumperpack">
-                <div class="bw1">
-                    <div class="bw2">
-                        <div class="bw3">
-                            <div class="bw4">
-                                <div class="bw5">
-                                    <div class="bw6">
-                                        <div id="mask" >
+<div>
+    <tiles:insertAttribute name="container"/>
+</div>
+</div>
 
-                                        </div>
-                                        <tiles:insertAttribute name="container" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <tiles:insertAttribute name="footer" />
-    </div>
+<div class="footer">
+    <tiles:insertAttribute name="footer"/>
+</div>
 </div>
 
 </body>
